@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Shooter Space Drone War | ASMAR Game Studio</title>
+    <meta name="description" content="Offline shoot 'em up with original hard rock soundtrack. 30+ levels, 5 epic bosses, bullet hell combat. No WiFi needed.">
+    <link rel="icon" href="https://play-lh.googleusercontent.com/placeholder-icon" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a0a2e 0%, #0f0f1a 50%, #1a0a0a 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,50,50,0.08) 0%, transparent 60%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .app-icon {
+            width: 140px; height: 140px;
+            border-radius: 28px;
+            box-shadow: 0 0 40px rgba(255,50,50,0.4), 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 24px;
+            border: 2px solid rgba(255,80,80,0.3);
+        }
+        .hero h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff4444, #ff8844, #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .hero .tagline {
+            font-size: 1.3em;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+        .hero .sub-tagline {
+            color: #ff6644;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .badge {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #ddd;
+        }
+        .badge.rock { border-color: rgba(255,80,80,0.4); color: #ff8866; }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff4444, #ff6644);
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            box-shadow: 0 4px 20px rgba(255,50,50,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255,50,50,0.6);
+        }
+
+        /* Feature Graphic */
+        .feature-graphic {
+            padding: 40px 0;
+            text-align: center;
+            background: #0d0d14;
+        }
+        .feature-graphic img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 0;
+            background: #0a0a0f;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        .features h2 span { color: #ff6644; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: linear-gradient(145deg, #141420, #0f0f18);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,80,80,0.3);
+        }
+        .feature-card .icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+        .feature-card h3 {
+            color: #ff8866;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .feature-card p { color: #aaa; font-size: 0.95em; }
+
+        /* Screenshots */
+        .screenshots {
+            padding: 60px 0;
+            background: #0d0d14;
+            text-align: center;
+        }
+        .screenshots h2 { font-size: 2em; margin-bottom: 40px; }
+        .screenshots h2 span { color: #ff6644; }
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .screenshot-grid img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s;
+        }
+        .screenshot-grid img:hover { transform: scale(1.03); }
+
+        /* How to Play */
+        .how-to-play {
+            padding: 60px 0;
+            background: #0a0a0f;
+        }
+        .how-to-play h2 { text-align: center; font-size: 2em; margin-bottom: 40px; }
+        .how-to-play h2 span { color: #ff6644; }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .step {
+            background: #141420;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .step-num {
+            display: inline-block;
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #ff4444, #ff6644);
+            border-radius: 50%;
+            line-height: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .step p { color: #ccc; font-size: 0.95em; }
+
+        /* Footer */
+        footer {
+            background: #07070a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        footer p { color: #666; font-size: 0.9em; margin-bottom: 12px; }
+        footer a { color: #ff8866; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .social-links { margin-top: 16px; }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2em; }
+            .hero { padding: 50px 0 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <!-- Replace src with your actual app icon URL from Play Console -->
+            <img src="https://play-lh.googleusercontent.com/placeholder-app-icon" alt="Galaxy Shooter Space Drone War" class="app-icon">
+            <h1>Galaxy Shooter Space Drone War</h1>
+            <p class="tagline">Offline Shoot 'Em Up with Bullet Hell Combat</p>
+            <p class="sub-tagline">🎸 Original Hard Rock Soundtrack Included</p>
+            <div class="badges">
+                <span class="badge rock">🎸 Hard Rock OST</span>
+                <span class="badge">📴 100% Offline</span>
+                <span class="badge">👾 30+ Levels</span>
+                <span class="badge">⚔️ 5 Epic Bosses</span>
+                <span class="badge">🚫 No Forced Ads</span>
+            </div>
+            <a href="https://play.google.com/store/apps/details?id=com.ASMARGAMESTUDIO.SpaceFighterShooter" class="cta-button">Download on Google Play</a>
+        </div>
+    </section>
+
+    <section class="feature-graphic">
+        <div class="container">
+            <!-- Replace with your actual Feature Graphic from Play Console (1024x500) -->
+            <img src="feature-graphic.png" alt="Space Drone Shooter - Fight, Survive, Upgrade Your Drones, Epic Enemy Bosses, Stunning Visuals">
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Players Love <span>Drone War</span></h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">🎸</div>
+                    <h3>Original Hard Rock Soundtrack</h3>
+                    <p>Every battle is powered by an exclusive hard rock score. No other space shooter on Android delivers this.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📴</div>
+                    <h3>Truly Offline</h3>
+                    <p>No Wi-Fi. No account. No data. Download once and play anywhere — commuting, traveling, or at home.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">👾</div>
+                    <h3>30+ Alien Invasion Levels</h3>
+                    <p>Fight through intense stages packed with alien fleets, enemy drones, and massive mechanical bosses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h3>Unlock & Upgrade Drones</h3>
+                    <p>Multiple combat drones with unique weapons and abilities. Upgrade firepower and find your perfect loadout.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔥</div>
+                    <h3>Classic Arcade Gameplay</h3>
+                    <p>Inspired by Galaga and Raiden. Smooth touch controls, auto-fire, power-ups, and bullet hell chaos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏆</div>
+                    <h3>Fair Free-to-Play</h3>
+                    <p>Rewarded ads only — always optional. No interstitials. No pay-to-win. No forced purchases, ever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <div class="container">
+            <h2>Gameplay <span>Screenshots</span></h2>
+            <div class="screenshot-grid">
+                <!-- Replace with your actual phone screenshots from Play Console -->
+                <img src="screenshots/screenshot-1.png" alt="Unlock Powerful Drones">
+                <img src="screenshots/screenshot-2.png" alt="Hard Rock Soundtrack">
+                <img src="screenshots/screenshot-3.png" alt="No Account Required">
+                <img src="screenshots/screenshot-4.png" alt="Play Offline Anytime">
+                <img src="screenshots/screenshot-5.png" alt="Epic Boss Battles">
+                <img src="screenshots/screenshot-6.png" alt="Bullet Hell Challenges">
+                <img src="screenshots/screenshot-7.png" alt="Defend the Galaxy">
+                <img src="screenshots/screenshot-8.png" alt="Unlock Powerful Drones">
+            </div>
+        </div>
+    </section>
+
+    <section class="how-to-play">
+        <div class="container">
+            <h2>How to <span>Play</span></h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <p>Swipe to move your combat drone</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <p>Auto-fire attacks enemies automatically</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <p>Dodge bullet hell patterns and obstacles</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <p>Collect power-ups and weapon upgrades</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <p>Defeat alien fleets and space bosses</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">6</div>
+                    <p>Survive all 30+ levels and protect the galaxy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 ASMAR Game Studio. All rights reserved.</p>
+            <p><a href="privacy-policy.html">Privacy Policy</a></p>
+            <div class="social-links">
+                <a href="https://play.google.com/store/apps/dev?id=6363408347113512518" target="_blank">Google Play</a>
+                <a href="https://github.com/asmargamestudio" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
